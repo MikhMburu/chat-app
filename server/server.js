@@ -16,9 +16,24 @@ app.use(express.static(publicPath));
 io.on("connection",(socket)=>{
     console.log("New user connected. . .");
 
-    socket.on("disconnect", () => {
-        console.log("Client disconnected. . ");
-    })
+    // socket.on("disconnect", () => {
+    //     console.log("Client disconnected. . ");
+    // })
+    // socket.emit("newEmail",{
+    //     from: 'michael n',
+    //     message: "this is a message"
+    // });
+    // socket.on("createEmail",(newEmail)=>{
+    //     console.log("\nYou've got mail: \n",JSON.stringify(newEmail, undefined, 2));
+    // });
+    socket.emit("newMessage",{
+        from: "Server",
+        text: "This is a message from the server. . .",
+        createdAt: new Date().toTimeString()
+    });
+    socket.on("createMessage",(msg)=>{
+        console.log("\nNew Message:\n",JSON.stringify(msg, undefined, 2));
+    });
 });
 
 server.listen(port,()=>{
