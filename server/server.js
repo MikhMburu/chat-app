@@ -3,6 +3,7 @@ const http = require("http");
 const express = require("express");
 const port = process.env.PORT || 3000;
 const socketIO = require("socket.io");
+const {generateMessage,generateLocationMessage} = require("./utils/message");
 
 const publicPath = path.join(__dirname,"../public");
 // console.log(publicPath);
@@ -16,24 +17,20 @@ app.use(express.static(publicPath));
 io.on("connection",(socket)=>{
     console.log("New user connected. . .");
 
-    // socket.on("disconnect", () => {
-    //     console.log("Client disconnected. . ");
-    // })
-    // socket.emit("newEmail",{
-    //     from: 'michael n',
-    //     message: "this is a message"
-    // });
-    // socket.on("createEmail",(newEmail)=>{
-    //     console.log("\nYou've got mail: \n",JSON.stringify(newEmail, undefined, 2));
-    // });
-    socket.emit("newMessage",{
-        from: "Server",
-        text: "This is a message from the server. . .",
-        createdAt: new Date().toTimeString()
-    });
-    socket.on("createMessage",(msg)=>{
+    socket.emit("newMessage", generateMessage("Admin","Welcome to the Chat App. . ."));
+    socket.broadcast.emit("newMessage", generateMessage("Admin","New User joined. . ."));
+    //listening
+    socket.on("createMessage",(msg, callback)=>{
         console.log("\nNew Message:\n",JSON.stringify(msg, undefined, 2));
+        io.emit("newMessage",generateMessage(msg.from, msg.text));
+        callback();        
     });
+
+    // ..listening for geolocation information from user
+    socket.on("createLocationMessage", (pin)=>{
+        io.emit("newLocationMessage", generateLocationMessage("Admin",pin.longitude, pin.latitude));
+    });
+    
 });
 
 server.listen(port,()=>{

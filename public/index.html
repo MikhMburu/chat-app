@@ -2,12 +2,30 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Chat With Me</title>
 </head>
-<body>
-    <p>Welcome to the chat app</p>
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="Users">
+
+        </div>
+    </div> 
+    <div class="chat__main">
+        <ul id="messages" class="chat__messages"></ul>
+        <div class="chat__footer">
+            <form action="" id="message-form">
+                <input type="text" name="message" id="message" placeholder="Type message here" autofocus autocomplete="off" />
+                <button>Send</button>
+            </form>
+            <button id="my-location">Send Location</button>
+        </div>
+    
+    </div>  
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/lib/jquery-3.3.1.min.js"></script>    
     <script src="/js/index.js"></script>
 </body>
 </html>
