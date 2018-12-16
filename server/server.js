@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const socketIO = require("socket.io");
 const {generateMessage,generateLocationMessage} = require("./utils/message");
 
+
 const publicPath = path.join(__dirname,"../public");
 // console.log(publicPath);
 var app = express();
@@ -28,7 +29,7 @@ io.on("connection",(socket)=>{
 
     // ..listening for geolocation information from user
     socket.on("createLocationMessage", (pin)=>{
-        io.emit("newLocationMessage", generateLocationMessage("Admin",pin.longitude, pin.latitude));
+        io.emit("newLocationMessage", generateLocationMessage("User",pin.longitude, pin.latitude));
     });
     
 });

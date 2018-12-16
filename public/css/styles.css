@@ -178,6 +178,9 @@
   .message__title span {
     color: #999;
   }
+  /* .message__body{
+    display: inline-block;
+  } */
   
   @media (max-width: 600px) {
     * {
