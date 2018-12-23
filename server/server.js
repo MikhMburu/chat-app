@@ -36,14 +36,20 @@ io.on("connection",(socket)=>{
     })
 
     //-------------LISTEN TO MESSAGE FROM USER----------------------
-    socket.on("createMessage",(msg, callback)=>{        
-        io.emit("newMessage",generateMessage(msg.from, msg.text));
+    socket.on("createMessage",(msg, callback)=>{  
+        var user = userList.getUser(socket.id);
+        if(user && isRealString(msg.text)){
+            io.to(user.room).emit("newMessage",generateMessage(user.name, msg.text));
+        }
         callback();        
     });
 
     //-------------LISTEN FOR GEOLOCATION INFO FROM USER---------------
     socket.on("createLocationMessage", (pin)=>{
-        io.emit("newLocationMessage", generateLocationMessage("User",pin.longitude, pin.latitude));
+        var user = userList.getUser(socket.id);
+        if(user){
+            io.to(user.room).emit("newLocationMessage", generateLocationMessage(user.name,pin.longitude, pin.latitude));
+        }
     });
 
     //------------------USER LEAVES THE CHAT ROOM--------------------
