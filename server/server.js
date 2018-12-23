@@ -63,11 +63,9 @@ io.on("connection",(socket)=>{
         }
         // socket.broadcast.to(pa.room).emit("newMessage",generateMessage("Admin", `${removedUser} left the chat room`));
         // socket.broadcast.to(params.room).emit("updateUsersList",userList.getUserList(params.room));
-    });
-
-    
+    });    
 });
 
 server.listen(port,()=>{
     console.log(`Chat app is up and running on port ${port}`);
-})
+});

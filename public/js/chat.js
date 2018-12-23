@@ -28,6 +28,7 @@ function scrollToBottom(){
         messages.scrollTop(scrollHeight);
     }
 }
+
 socket.on("newMessage", function(newMsg){
     var formattedTime = moment(newMsg.createdAt).format("h:mm a");
     var template = jQuery("#message-template").html();
@@ -38,10 +39,11 @@ socket.on("newMessage", function(newMsg){
     });
     jQuery("#messages").append(html);
     scrollToBottom();
-})
+});
+
 socket.on("createMessage",function(){
     console.log(JSON.stringify(msg, undefined, 2));
-})
+});
 
 socket.on("disconnect", function(){
     console.log("User disconnected. . .");
