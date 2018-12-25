@@ -29,16 +29,20 @@ function scrollToBottom(){
     }
 }
 
-socket.on("newMessage", function(newMsg){
-    var formattedTime = moment(newMsg.createdAt).format("h:mm a");
+function formatMessage(msg){
+    var formattedTime = moment(msg.createdAt).format("h:mm a");
     var template = jQuery("#message-template").html();
     var html = Mustache.render(template, {
-        text: newMsg.text,
-        from: newMsg.from,
+        text: msg.text,
+        from: msg.from,
         createdAt: formattedTime
     });
     jQuery("#messages").append(html);
     scrollToBottom();
+};
+
+socket.on("newMessage", function(newMsg){
+    formatMessage(newMsg);
 });
 
 socket.on("createMessage",function(){

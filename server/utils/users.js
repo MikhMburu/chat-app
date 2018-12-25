@@ -3,6 +3,7 @@ class Users{
     constructor(){
         this.user = [];
     }
+    
     addUser(id, name, room){
         var user = {id, name, room};
         this.user.push(user);
